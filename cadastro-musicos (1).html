@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Musical - Sistema Profissional</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --light-accent: #e9f7fe;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #c0392b;
+            --text-color: #333;
+            --light-text: #7f8c8d;
+            --border-radius: 4px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+            padding: 0;
+            margin: 0;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-bottom: 5px solid var(--accent-color);
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+        
+        header p {
+            font-style: italic;
+            opacity: 0.8;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+        }
+        
+        .form-container, .data-container {
+            background-color: white;
+            margin: 2rem auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1.2rem;
+            font-size: 1.4rem;
+            font-weight: 400;
+            border-bottom: 3px solid var(--accent-color);
+        }
+        
+        .section-content {
+            padding: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+            font-size: 0.95rem;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            background-color: #fcfcfc;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        button {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        #cancelBtn {
+            background-color: #95a5a6;
+        }
+        
+        #cancelBtn:hover {
+            background-color: #7f8c8d;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            background-color: white;
+        }
+        
+        thead tr {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        th {
+            font-weight: 500;
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid #ecf0f1;
+            transition: var(--transition);
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        
+        tbody tr:hover {
+            background-color: var(--light-accent);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .action-buttons button {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .edit {
+            background-color: var(--warning-color);
+        }
+        
+        .edit:hover {
+            background-color: #e67e22;
+        }
+        
+        .delete {
+            background-color: var(--danger-color);
+        }
+        
+        .delete:hover {
+            background-color: #a93226;
+        }
+        
+        .controls {
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        #searchInput {
+            flex-grow: 1;
+        }
+        
+        #searchField {
+            width: auto;
+            min-width: 150px;
+        }
+        
+        #exportCSV {
+            background-color: var(--success-color);
+        }
+        
+        #exportCSV:hover {
+            background-color: #219955;
+        }
+        
+        #clearAll {
+            background-color: var(--danger-color);
+        }
+        
+        #clearAll:hover {
+            background-color: #a93226;
+        }
+        
+        .empty-state {
+            padding: 2rem;
+            text-align: center;
+            color: var(--light-text);
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .section-content {
+                padding: 1.5rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            th, td {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>CATÁLOGO MUSICAL</h1>
+            <p>Sistema Profissional de Registro e Catalogação Musical</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <div class="section-header">
+                Adicionar Novo Registro
+            </div>
+            <div class="section-content">
+                <form id="musicForm">
+                    <div class="form-group">
+                        <label for="nome">Nome do Músico/Compositor:</label>
+                        <input type="text" id="nome" required placeholder="Ex: Ludwig van Beethoven">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="composicao">Composição:</label>
+                        <input type="text" id="composicao" required placeholder="Ex: Sinfonia Nº 9">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pais">País de Origem:</label>
+                        <input type="text" id="pais" required placeholder="Ex: Alemanha">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="instrumento">Instrumento Principal:</label>
+                        <input type="text" id="instrumento" required placeholder="Ex: Piano">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="genero">Gênero Musical:</label>
+                        <select id="genero" required>
+                            <option value="">Selecione um gênero</option>
+                            <option value="Clássico">Clássico</option>
+                            <option value="Jazz">Jazz</option>
+                            <option value="Blues">Blues</option>
+                            <option value="Rock">Rock</option>
+                            <option value="Pop">Pop</option>
+                            <option value="MPB">MPB</option>
+                            <option value="Eletrônica">Eletrônica</option>
+                            <option value="R&B">R&B</option>
+                            <option value="Hip Hop">Hip Hop</option>
+                            <option value="Música Sacra">Música Sacra</option>
+                            <option value="Ópera">Ópera</option>
+                            <option value="Música de Câmara">Música de Câmara</option>
+                            <option value="Folk">Folk</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="movimento">Movimento Artístico:</label>
+                        <input type="text" id="movimento" required placeholder="Ex: Romantismo">
+                    </div>
+                    
+                    <button type="submit" id="submitBtn">Adicionar Registro</button>
+                    <button type="button" id="cancelBtn" style="display: none;">Cancelar Edição</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="data-container">
+            <div class="section-header">
+                Registros Catalogados
+            </div>
+            <div class="section-content">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Digite para buscar...">
+                    <select id="searchField">
+                        <option value="all">Todos os campos</option>
+                        <option value="nome">Nome</option>
+                        <option value="composicao">Composição</option>
+                        <option value="pais">País</option>
+                        <option value="instrumento">Instrumento</option>
+                        <option value="genero">Gênero</option>
+                        <option value="movimento">Movimento</option>
+                    </select>
+                    <button id="searchBtn">Pesquisar</button>
+                </div>
+                
+                <div class="controls">
+                    <button id="exportCSV">Exportar Catálogo (CSV)</button>
+                    <button id="clearAll">Remover Todos os Dados</button>
+                </div>
+                
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Composição</th>
+                            <th>País</th>
+                            <th>Instrumento</th>
+                            <th>Gênero</th>
+                            <th>Movimento</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dados serão inseridos aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Estado da aplicação
+            let musicData = JSON.parse(localStorage.getItem('musicData')) || [];
+            let editIndex = -1;
+
+            // Elementos do DOM
+            const form = document.getElementById('musicForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const tableBody = document.querySelector('#dataTable tbody');
+            const searchInput = document.getElementById('searchInput');
+            const searchField = document.getElementById('searchField');
+            const searchBtn = document.getElementById('searchBtn');
+            const exportBtn = document.getElementById('exportCSV');
+            const clearAllBtn = document.getElementById('clearAll');
+
+            // Carregar dados iniciais
+            renderTable(musicData);
+
+            // Event Listeners
+            form.addEventListener('submit', handleFormSubmit);
+            cancelBtn.addEventListener('click', cancelEdit);
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            exportBtn.addEventListener('click', exportToCSV);
+            clearAllBtn.addEventListener('click', clearAllData);
+
+            // Funções
+            function handleFormSubmit(e) {
+                e.preventDefault();
+                
+                const musicEntry = {
+                    nome: document.getElementById('nome').value.trim(),
+                    composicao: document.getElementById('composicao').value.trim(),
+                    pais: document.getElementById('pais').value.trim(),
+                    instrumento: document.getElementById('instrumento').value.trim(),
+                    genero: document.getElementById('genero').value,
+                    movimento: document.getElementById('movimento').value.trim()
+                };
+
+                if (editIndex > -1) {
+                    // Modo de edição
+                    musicData[editIndex] = musicEntry;
+                    editIndex = -1;
+                    submitBtn.textContent = 'Adicionar Registro';
+                    cancelBtn.style.display = 'none';
+                } else {
+                    // Adicionando novo registro
+                    musicData.push(musicEntry);
+                }
+
+                // Atualizar localStorage e tabela
+                localStorage.setItem('musicData', JSON.stringify(musicData));
+                renderTable(musicData);
+                form.reset();
+                
+                // Feedback visual
+                submitBtn.classList.add('success');
+                submitBtn.textContent = editIndex > -1 ? 'Registro Atualizado!' : 'Registro Adicionado!';
+                
+                setTimeout(() => {
+                    submitBtn.classList.remove('success');
+                    submitBtn.textContent = 'Adicionar Registro';
+                }, 1500);
+            }
+
+            function renderTable(data) {
+                tableBody.innerHTML = '';
+                
+                if (data.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="7" class="empty-state">Nenhum registro encontrado no catálogo</td></tr>';
+                    return;
+                }
+
+                data.forEach((item, index) => {
+                    const row = document.createElement('tr');
+                    
+                    row.innerHTML = `
+                        <td>${item.nome}</td>
+                        <td>${item.composicao}</td>
+                        <td>${item.pais}</td>
+                        <td>${item.instrumento}</td>
+                        <td>${item.genero}</td>
+                        <td>${item.movimento}</td>
+                        <td class="action-buttons">
+                            <button class="edit" data-index="${index}">Editar</button>
+                            <button class="delete" data-index="${index}">Excluir</button>
+                        </td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+
+                // Adicionar event listeners para os botões de ação
+                document.querySelectorAll('.edit').forEach(btn => {
+                    btn.addEventListener('click', editItem);
+                });
+
+                document.querySelectorAll('.delete').forEach(btn => {
+                    btn.addEventListener('click', deleteItem);
+                });
+            }
+
+            function editItem(e) {
+                const index = parseInt(e.target.getAttribute('data-index'));
+                editIndex = index;
+                const item = musicData[index];
+                
+                // Preencher o formulário com os dados existentes
+                document.getElementById('nome').value = item.nome;
+                document.getElementById('composicao').value = item.composicao;
+                document.getElementById('pais').value = item.pais;
+                document.getElementById('instrumento').value = item.instrumento;
+                document.getElementById('genero').value = item.genero;
+                document.getElementById('movimento').value = item.movimento;
+                
+                // Mudar o texto do botão e mostrar botão de cancelar
+                submitBtn.textContent = 'Atualizar Registro';
+                cancelBtn.style.display = 'inline-block';
+                
+                // Rolar para o formulário
+                document.querySelector('.form-container').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            function deleteItem(e) {
+                if (confirm('Tem certeza que deseja excluir este registro do catálogo?')) {
+                    const index = parseInt(e.target.getAttribute('data-index'));
+                    musicData.splice(index, 1);
+                    localStorage.setItem('musicData', JSON.stringify(musicData));
+                    renderTable(musicData);
+                }
+            }
+
+            function cancelEdit() {
+                editIndex = -1;
+                form.reset();
+                submitBtn.textContent = 'Adicionar Registro';
+                cancelBtn.style.display = 'none';
+            }
+
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const field = searchField.value;
+                
+                if (!searchTerm) {
+                    renderTable(musicData);
+                    return;
+                }
+                
+                const filteredData = musicData.filter(item => {
+                    if (field === 'all') {
+                        return Object.values(item).some(value => 
+                            value.toLowerCase().includes(searchTerm)
+                        );
+                    } else {
+                        return item[field].toLowerCase().includes(searchTerm);
+                    }
+                });
+                
+                renderTable(filteredData);
+            }
+
+            function exportToCSV() {
+                if (musicData.length === 0) {
+                    alert('Não há dados para exportar no catálogo');
+                    return;
+                }
+                
+                const headers = ['Nome', 'Composição', 'País', 'Instrumento', 'Gênero', 'Movimento'];
+                let csvContent = headers.join(',') + '\n';
+                
+                musicData.forEach(item => {
+                    const row = [
+                        `"${item.nome}"`,
+                        `"${item.composicao}"`,
+                        `"${item.pais}"`,
+                        `"${item.instrumento}"`,
+                        `"${item.genero}"`,
+                        `"${item.movimento}"`
+                    ];
+                    csvContent += row.join(',') + '\n';
+                });
+                
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                
+                const date = new Date();
+                const formattedDate = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+                
+                link.setAttribute('href', url);
+                link.setAttribute('download', `catalogo_musical_${formattedDate}.csv`);
+                link.style.visibility = 'hidden';
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            function clearAllData() {
+                if (confirm('Tem certeza que deseja excluir TODOS os registros do catálogo? Esta ação não poderá ser desfeita.')) {
+                    musicData = [];
+                    localStorage.setItem('musicData', JSON.stringify(musicData));
+                    renderTable(musicData);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
